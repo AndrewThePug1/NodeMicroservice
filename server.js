@@ -77,6 +77,25 @@ app.put('/api/inventory/:id', (req, res) => {
     res.status(200).json(updatedItem);
 });
 
+// DELETE route for removing an item
+app.delete('/api/inventory/:id', (req, res) => {
+    // Exact item ID from URL params
+    const { id } = req.params;
+
+    //Attempt to find item in inventory
+    const itemIndex = inventoryItems.findIndex(item => item.id === parseInt(id, 10))
+    if (itemIndex === -1) {
+        // If item is not found reutrn 404 Not found response
+        return res.status(404).send('Item not found.');
+    }
+
+
+    // Remote item from inventory
+    inventoryItems.splice(itemIndex, 1);
+
+    // Send response indicating item was deleted
+    res.status(200).send(`Item with id @{id} has been deleted.`);
+});
 
 
 // Start the server
