@@ -62,7 +62,7 @@ app.get('/api/inventory/:id', (req, res) => {
 
 
 // Step 3: PUT Route for Updating an item
-app.put('/api/inventory/:id', (req, res) => {
+app.put('/api/inventory/:id', validateInventoryItem, (req, res) => {
     // Extract the item ID from the URL parameters
     const { id } = req.params;
     
@@ -105,7 +105,8 @@ app.delete('/api/inventory/:id', (req, res) => {
 });
 
 
-
+// Calling this is used to test if the app.use error middleware
+//is working as expected.  
 app.get('/test-error', (req, res, next) => {
     // Simulate an error
     const err = new Error('Test Error');
@@ -122,7 +123,12 @@ app.use((err, req, res, next) => {
 
 
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Inventory Management Microservice running at http://localhost:${port}`);
-});
+// Conditionally start the server if this file is run directly
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Inventory Management Microservice running at http://localhost:${port}`);
+    });
+}
+
+// Export the app for testing
+module.exports = app;
