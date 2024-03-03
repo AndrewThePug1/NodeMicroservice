@@ -24,7 +24,7 @@ function validateInventoryItem(req, res, next) {
 }
 
 
-// POST route for adding new inventory items
+// POST route for adding new inventory items, using validation middleware
 app.post('/api/inventory', validateInventoryItem, (req, res) => {
     // Extract item details from request body
     const { name, quantity, description } = req.body;
@@ -103,6 +103,23 @@ app.delete('/api/inventory/:id', (req, res) => {
     // Send response indicating item was deleted
     res.status(200).send(`Item with id @{id} has been deleted.`);
 });
+
+
+
+app.get('/test-error', (req, res, next) => {
+    // Simulate an error
+    const err = new Error('Test Error');
+    next(err); // Pass the error to Express's error handling middleware
+});
+
+
+// Error handling Middleware - should be last piece of middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log error for debugging purposes
+    res.status(500).send('Something went wrong!');
+});
+
+
 
 
 // Start the server
