@@ -11,15 +11,23 @@ let inventoryItems = [];
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
+
+
+
+// Validation Middleware
+function validateInventoryItem(req, res, next) {
+    const { name, quantity, description } = req.body;
+    if (!name || quantity === undefined || isNaN(quantity) || quantity < 0) {
+        return res.status(400).send('Invalid request: Name and quantity are required, and quantity must be a non-negative number.');
+    }
+    next();
+}
+
+
 // POST route for adding new inventory items
-app.post('/api/inventory', (req, res) => {
+app.post('/api/inventory', validateInventoryItem, (req, res) => {
     // Extract item details from request body
     const { name, quantity, description } = req.body;
-
-    // Simple validation to ensure name and quantity are provided
-    if (!name || quantity === undefined) {
-        return res.status(400).send('Item name and quantity are required.');
-    }
 
     // Create a new inventory item
     const newItem = {
@@ -40,7 +48,6 @@ app.post('/api/inventory', (req, res) => {
 app.get('/api/inventory', (req, res) => {
     res.status(200).json(inventoryItems);
 });
-
 // Step 2: GET route for a specific inventory item
 app.get('/api/inventory/:id', (req, res) => {
     const { id } = req.params;
