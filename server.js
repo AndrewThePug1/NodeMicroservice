@@ -36,11 +36,22 @@ app.post('/api/inventory', (req, res) => {
     res.status(201).send(newItem);
 });
 
-
-app.get('/test', (req, res) => {
-    res.send('Server is working!');
+// Step 2: Get route for all inventory items
+app.get('/api/inventory', (req, res) => {
+    res.status(200).json(inventoryItems);
 });
 
+// Step 2: GET route for a specific inventory item
+app.get('/api/inventory/:id', (req, res) => {
+    const { id } = req.params;
+    const item = inventoryItems.find(item => item.id === parseInt(id, 10));
+
+    if (!item) {
+        return res.status(404).send('Item not found.');
+    }
+
+    res.status(200).json(item);
+});
 
 
 // Start the server
