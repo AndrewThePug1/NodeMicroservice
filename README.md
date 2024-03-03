@@ -14,7 +14,9 @@ This project is an inventory management microservice developed with Node.js and 
 Clone the repository and install its dependencies:
 
 git clone https://github.com/AndrewThePug1/NodeMicroservice/tree/FinalCodeWithUI
+
 cd MicroserviceLab
+
 npm install
 
 ## Running the Application
