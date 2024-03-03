@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management</title>
-    <!-- Todo Add UI components-->
 </head>
 <body>
-    <!-- Your content here -->
+    <h1>Inventory Management</h1>
+
+    <!-- Form for adding new items -->
+    <h2>Add New Item</h2>
+    <form id="addItemForm">
+        Name: <input type="text" id="itemName"><br>
+        Quantity: <input type="number" id="itemQuantity"><br>
+        Description: <input type="text" id="itemDescription"><br>
+        <button type="submit">Add Item</button>
+    </form>
+
+    <!-- Form for updating items (hidden by default) -->
+    <h2 id="updateItemTitle" style="display:none;">Update Item</h2>
+    <form id="updateItemForm" style="display:none;">
+        ID: <input type="text" id="updateItemId" disabled><br>
+        Name: <input type="text" id="updateItemName"><br>
+        Quantity: <input type="number" id="updateItemQuantity"><br>
+        Description: <input type="text" id="updateItemDescription"><br>
+        <button type="submit">Update Item</button>
+    </form>
+
+    <!-- Display items -->
+    <h2>Inventory Items</h2>
+    <ul id="itemList"></ul>
+
+    <script src="app.js"></script>
 </body>
 </html>
